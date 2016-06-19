@@ -11,8 +11,8 @@ public class SensorManager {
     private static List<Sensor> sensorList = new ArrayList<>();
 
     public static Sensor getSensor(String id) {
-        for(Sensor sensor : sensorList) {
-            if(sensor.getId().equals(id)) {
+        for (Sensor sensor : sensorList) {
+            if (sensor.getId().equals(id)) {
                 return sensor;
             }
         }
@@ -24,7 +24,7 @@ public class SensorManager {
     }
 
     public static void setSensor(Sensor sensor) {
-        if(getSensor(sensor.getId()) != null) {
+        if (getSensor(sensor.getId()) != null) {
             removeSensor(getSensor(sensor.getId()));
             sensorList.add(sensor);
             return;
@@ -33,7 +33,7 @@ public class SensorManager {
     }
 
     public static void removeSensor(Sensor sensor) {
-        if(sensorList.contains(sensor))
+        if (sensorList.contains(sensor))
             sensorList.remove(sensor);
     }
 }

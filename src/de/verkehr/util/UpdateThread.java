@@ -5,11 +5,12 @@ import de.verkehr.data.SensorData;
 import de.verkehr.data.SensorManager;
 import de.verkehr.diagram.Diagram;
 import org.jfree.ui.RefineryUtilities;
-import sun.java2d.pipe.SpanShapeRenderer;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,9 +29,10 @@ public class UpdateThread implements Runnable {
 
     public void start() {
         this.running = true;
-        if(running)
+        if (running)
             this.thread.start();
     }
+
     public void stop() {
         System.out.println("Thread stopped:");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
@@ -44,7 +46,7 @@ public class UpdateThread implements Runnable {
         while (running) {
             //get lines
             ArrayList<String[]> lines = getLines();
-            if(lines.size() < 1) {
+            if (lines.size() < 1) {
                 System.out.println("found no line");
                 break;
             }
@@ -74,12 +76,13 @@ public class UpdateThread implements Runnable {
                 SensorManager.setSensor(sensor);
             }
 
-            final Diagram diagram = new Diagram("Autos pro Woche");
+            final Diagram diagram = new Diagram("SSMS Diagram");
             diagram.pack();
             RefineryUtilities.centerFrameOnScreen(diagram);
             diagram.show(true);
             try {
-                Thread.sleep(1000 * 30);
+                Thread.sleep(1000 * 5 /* * 30 */);
+                diagram.show(false);
             } catch (InterruptedException e) {
                 this.stop();
                 System.out.println("Thread crashed:");
@@ -114,7 +117,7 @@ public class UpdateThread implements Runnable {
             bufferedReader.lines().forEach(new Consumer<String>() {
                 @Override
                 public void accept(String s) {
-                    if(!s.trim().equals(""))
+                    if (!s.trim().equals(""))
                         lines.add(s.split(","));
                 }
             });
@@ -127,13 +130,14 @@ public class UpdateThread implements Runnable {
         }
         return lines;
     }
-                                                    //Default: DRUCKSENSOR
+
+    //Default: DRUCKSENSOR
     private InputStream getInputStream(String from, String to, String sensor) {
         System.out.println("get new sensordatas");
         HttpURLConnection connection = null;
 
         try {
-            URL url = new URL("http://192.168.6.102/csv.php?von=" + from +"&bis=" + to + "&sengr=" + sensor + "&all=off&type=off");
+            URL url = new URL("http://192.168.6.102/csv.php?von=" + from + "&bis=" + to + "&sengr=" + sensor + "&all=off&type=off");
             System.out.println(url);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");

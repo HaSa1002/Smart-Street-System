@@ -30,10 +30,12 @@ public class Sensor {
         sensorDatas.add(data);
         System.out.println(sensorDatas.size());
     }
+
     public void clearSensorData() {
         sensorDatas.clear();
         this.lastClear = new Date();
     }
+
     public int getHighestSensorID() {
         return sensorDatas.size();
     }

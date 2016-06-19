@@ -47,26 +47,27 @@ public class Diagram extends ApplicationFrame {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         Map<Integer, Integer> dataMap = count(sensor.getSensorData());
 
-        for(int i = 0; i < 24; i++) {
+        for (int i = 0; i < 24; i++) {
             dataset.addValue(dataMap.get(i), "autos", i + " Uhr");
         }
 
         return dataset;
     }
-/*
-    private Map<Integer, SensorData> cluster(List<SensorData> dataList) {
-        Map<Integer, SensorData> clusterMap = new HashMap<>();
-        for(SensorData data : dataList) {
-            clusterMap.put(data.getTime().getHours(), data);
+
+    /*
+        private Map<Integer, SensorData> cluster(List<SensorData> dataList) {
+            Map<Integer, SensorData> clusterMap = new HashMap<>();
+            for(SensorData data : dataList) {
+                clusterMap.put(data.getTime().getHours(), data);
+            }
+            return clusterMap;
         }
-        return clusterMap;
-    }
-*/
+    */
     private Map<Integer, Integer> count(List<SensorData> data) {
         Map<Integer, Integer> map = new HashMap<>();
-        for(int i = 0; i < data.size(); i++) {
+        for (int i = 0; i < data.size(); i++) {
             int hour = data.get(i).getTime().getHours();
-            if(map.containsKey(hour)) {
+            if (map.containsKey(hour)) {
                 int times = map.get(hour) + 1;
                 map.put(hour, times);
             } else {
