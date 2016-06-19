@@ -1,0 +1,33 @@
+102030<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Kennung</title>
+    </head>
+    <body>
+        <h1>Datenverarbeitung</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <h2>Dateninput</h2>
+            <p>Kennung: <input type="text" name="id"></p>
+            <p>Passwort: <input type="text" name="pass"></p>
+            <p>Datei: <input type="file" name="data"</p>
+            <p><button type="submit">Senden</button></p>
+        </form>
+        <form method="GET" action="csv.php">
+            <h2>Datenoutput</h2>
+            <p>Zeitraum: <input type="text" name="von" placeholder="YYYYMMDDhhmmss"> - <input type="text" name="bis" placeholder="YYYYMMDDhhmmss"></p>
+            <p>Sensorengruppen: <select name="sengr"><option>DRUCKSENSOR</option></select></p>
+            <p>Gesamte DB Ausgeben: <input type="checkbox" name="all"></p>
+            <p>Bei Gesamtausgabe Gruppe beachten: <input type="checkbox" name="type"></p>
+            <p><button type="submit">Senden</button></p>
+        </form>
+        <pre>
+                </pre>
+    </body>
+</html>
+40
