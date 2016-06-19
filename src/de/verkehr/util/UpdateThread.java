@@ -3,6 +3,8 @@ package de.verkehr.util;
 import de.verkehr.data.Sensor;
 import de.verkehr.data.SensorData;
 import de.verkehr.data.SensorManager;
+import de.verkehr.diagram.Diagram;
+import org.jfree.ui.RefineryUtilities;
 import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.io.*;
@@ -42,8 +44,10 @@ public class UpdateThread implements Runnable {
         while (running) {
             //get lines
             ArrayList<String[]> lines = getLines();
-            if(lines.size() < 1)
+            if(lines.size() < 1) {
                 System.out.println("found no line");
+                break;
+            }
 
             for (String[] line : lines) {
 
@@ -70,8 +74,12 @@ public class UpdateThread implements Runnable {
                 SensorManager.setSensor(sensor);
             }
 
+            final Diagram diagram = new Diagram("Autos pro Woche");
+            diagram.pack();
+            RefineryUtilities.centerFrameOnScreen(diagram);
+            diagram.show(true);
             try {
-                Thread.sleep(20000);
+                Thread.sleep(1000 * 30);
             } catch (InterruptedException e) {
                 this.stop();
                 System.out.println("Thread crashed:");
@@ -93,7 +101,7 @@ public class UpdateThread implements Runnable {
             //inputStream = new FileInputStream("C:\\Users\\Raffael\\Desktop\\Daten.csv");
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMddHHmmss");
-            long time = 1000 * 60 * 60 * 24;
+            long time = 1000 * 60 * 60 * 24 * 7;
             String from = dateFormat.format(System.currentTimeMillis() - time);
             String to = dateFormat.format(System.currentTimeMillis());
             System.out.println(from + " - " + to);
@@ -125,7 +133,7 @@ public class UpdateThread implements Runnable {
         HttpURLConnection connection = null;
 
         try {
-            URL url = new URL("http://192.168.137.104/csv.php?von=" + from +"&bis=" + to + "&sengr=" + sensor + "&all=off&type=off");
+            URL url = new URL("http://192.168.6.102/csv.php?von=" + from +"&bis=" + to + "&sengr=" + sensor + "&all=off&type=off");
             System.out.println(url);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
