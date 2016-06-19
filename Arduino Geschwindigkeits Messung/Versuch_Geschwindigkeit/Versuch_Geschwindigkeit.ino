@@ -1,5 +1,5 @@
 const int Schalter1 = 2;
-const int Schalter2 = 4;
+const int Schalter2 = 5;
 long Startzeit = 0;
 unsigned int Stopzeit = 0;
 const int Sen = 12;
@@ -35,7 +35,6 @@ void loop() {
   delay(10);
   Stopzeit = (millis() - Startzeit) / 100;
   Serial.println(Geschwindigkeit);
-  Serial.println(Stopzeit);
   if (Sch2 == HIGH) {
     Endzeit = Stopzeit;
     Geschwindigkeit = 50 / (Endzeit / 10) * 60 / 100;
@@ -43,7 +42,7 @@ void loop() {
   }
 
 if (Sch2 == HIGH){
-  if (Geschwindigkeit > 5)
+  if (Geschwindigkeit > 6)
   { digitalWrite (ROT , HIGH);
     delay(1000);
     digitalWrite (ROT , LOW);
